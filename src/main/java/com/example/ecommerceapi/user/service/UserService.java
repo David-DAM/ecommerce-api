@@ -1,5 +1,9 @@
-package com.example.ecommerceapi.user.domain;
+package com.example.ecommerceapi.user.service;
 
+import com.example.ecommerceapi.exception.domain.NotFoundException;
+import com.example.ecommerceapi.user.domain.User;
+import com.example.ecommerceapi.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,38 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-    public User save(User user) {
-
-        if (!validateUser(user)) {
-            return null;
-        }
-
-        User userDB = new User();
-
-        //PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        String passwordEncrypted = this.passwordEncoder.encode(user.getPassword());
-
-        userDB.setPassword(passwordEncrypted);
-        userDB.setName(user.getName());
-        userDB.setEmail(user.getEmail());
-        //userDB.setRole()
-
-        this.userRepository.save(userDB);
-
-        //Enviar notificacion por email
-
-        return userDB;
-    }
+    private final UserRepository userRepository;
 
     public boolean validateUser(User user){
 
@@ -73,8 +49,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id){
-        return this.userRepository.findById(id);
+    public Optional<User> findById(Long id) throws NotFoundException {
+        Optional<User> user = this.userRepository.findById(id);
+
+        if(user.isEmpty()) throw new NotFoundException("Usuario con id "+id+" no existe");
+
+        return user;
     }
 
     public void delete(Long id){
