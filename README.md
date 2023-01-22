@@ -15,7 +15,11 @@ Las funcionalidades de este proyecto son las siguientes:
   - CRUD
 - Categorías
   - CRUD
+- Seguridad
+  - Uso de JWT como método de autenticación
 
+Futuras mejoras:
+- Incluir imágenes de productos almacenadas en servicios de Amazon ( S3 )
 
 ### DEPENDENCIAS:
 - Spring Boot DevTools
@@ -25,4 +29,5 @@ Las funcionalidades de este proyecto son las siguientes:
 - MySQL Driver
 - Spring Data JPA
 - Spring Security
+- SWAGGER ( SPRING DOC OPENAPI )
 
