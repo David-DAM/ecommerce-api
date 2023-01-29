@@ -1,10 +1,14 @@
-package com.david.ecommerceapi.product;
+package com.david.ecommerceapi.product.domain;
 
+import com.david.ecommerceapi.productShoppingCart.ProductShoppingCart;
+import com.david.ecommerceapi.shoppingCart.ShoppingCart;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,4 +25,7 @@ public class Product {
     private String image;
     @Enumerated(EnumType.STRING)
     private Category category;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    private List<ProductShoppingCart> productShoppingCarts;
+
 }

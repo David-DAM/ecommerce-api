@@ -42,7 +42,7 @@ public class UserService {
 
         //if (userDB.isEmpty()) throw new Exception("User not found");
 
-        BeanUtils.copyProperties(user,userDB);
+        BeanUtils.copyProperties(user,userDB.get(),"role","password");
 
         this.userRepository.save(userDB.get());
 
