@@ -1,6 +1,8 @@
 package com.david.ecommerceapi.security.service;
 
+import com.david.ecommerceapi.exception.domain.InvalidTokenException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoder;
@@ -51,7 +53,7 @@ public class JwtService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
-
+    //TODO add Exception here?
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }

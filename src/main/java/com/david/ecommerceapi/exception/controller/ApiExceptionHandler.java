@@ -2,6 +2,7 @@ package com.david.ecommerceapi.exception.controller;
 
 import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.exception.domain.ErrorMessage;
+import com.david.ecommerceapi.exception.domain.InvalidTokenException;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
             BadRequestException.class,
+            InvalidTokenException.class,
             HttpRequestMethodNotSupportedException.class,
             MethodArgumentNotValidException.class,
             MissingRequestHeaderException.class,
