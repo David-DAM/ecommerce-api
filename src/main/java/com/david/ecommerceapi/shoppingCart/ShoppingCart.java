@@ -28,4 +28,11 @@ public class ShoppingCart {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private List<ProductShoppingCart> products;
 
+    public double calculateTotalPrice(){
+
+        return products.stream()
+                .mapToDouble(x -> x.getProduct().getPrice() * x.getQuantity())
+                .sum();
+    }
+
 }
