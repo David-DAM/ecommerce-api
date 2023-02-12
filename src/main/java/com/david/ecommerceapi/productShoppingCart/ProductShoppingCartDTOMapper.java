@@ -8,7 +8,7 @@ public class ProductShoppingCartDTOMapper implements Function<ProductShoppingCar
     @Override
     public ProductShoppingCartDTO apply(ProductShoppingCart productShoppingCart) {
         return new ProductShoppingCartDTO.ProductShoppingCartDTOBuilder()
-                .product(productShoppingCart.getProduct())
+                .product_id(productShoppingCart.getProduct().getId())
                 .quantity(productShoppingCart.getQuantity())
                 .build();
 

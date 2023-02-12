@@ -25,7 +25,16 @@ Las funcionalidades de este proyecto actualmente son las siguientes:
   - Guardado de imagenes en servidor
 - Seguridad
   - Uso de JWT como método de autenticación
+- Carrito
+  - CRUD
+  - Productos carrito CRUD
 
 ### Futuras mejoras:
 - Incluir imágenes de productos almacenadas en servicios de Amazon ( S3 )
 - Verificación de creación y eliminación por correo electrónico
+
+### Tareas próximas
+
+- Mandar emails prueba
+- Generar PDF
+

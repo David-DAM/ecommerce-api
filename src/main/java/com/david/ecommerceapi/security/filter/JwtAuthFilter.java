@@ -1,5 +1,6 @@
 package com.david.ecommerceapi.security.filter;
 
+import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.security.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -59,6 +60,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }catch (ExpiredJwtException e){
             //TODO add Logger
+
         }
         filterChain.doFilter(request, response);
     }

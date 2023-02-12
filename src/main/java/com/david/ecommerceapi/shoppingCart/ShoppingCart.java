@@ -3,6 +3,9 @@ package com.david.ecommerceapi.shoppingCart;
 import com.david.ecommerceapi.product.domain.Product;
 import com.david.ecommerceapi.productShoppingCart.ProductShoppingCart;
 import com.david.ecommerceapi.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,17 +25,12 @@ public class ShoppingCart {
     private Long id;
     private double total;
     private boolean payed;
-    @ManyToOne()
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn()
     private User user;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private List<ProductShoppingCart> products;
-
-    public double calculateTotalPrice(){
-
-        return products.stream()
-                .mapToDouble(x -> x.getProduct().getPrice() * x.getQuantity())
-                .sum();
-    }
 
 }

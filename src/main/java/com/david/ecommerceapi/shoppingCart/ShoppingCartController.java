@@ -1,6 +1,7 @@
 package com.david.ecommerceapi.shoppingCart;
 
 import com.david.ecommerceapi.productShoppingCart.ProductShoppingCart;
+import com.david.ecommerceapi.productShoppingCart.ProductShoppingCartDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,11 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/{id}/products")
-    public ResponseEntity<ShoppingCart> saveProducts(@RequestBody List<ProductShoppingCart> productShoppingCartList,@PathVariable Long id){
+    public ResponseEntity<ShoppingCart> saveProducts(@RequestBody List<ProductShoppingCartDTO> productShoppingCartList, @PathVariable Long id){
         return ResponseEntity.ok(this.shoppingCartService.saveProducts(productShoppingCartList, id));
     }
     @PutMapping("/{id}/products")
-    public ResponseEntity<ShoppingCart> editProducts(@RequestBody List<ProductShoppingCart> productShoppingCartList,@PathVariable Long id){
+    public ResponseEntity<ShoppingCart> editProducts(@RequestBody List<ProductShoppingCartDTO> productShoppingCartList,@PathVariable Long id){
         return ResponseEntity.ok(this.shoppingCartService.editProducts(productShoppingCartList, id));
     }
     @DeleteMapping("/{id}/products")

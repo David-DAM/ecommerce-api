@@ -1,6 +1,7 @@
 package com.david.ecommerceapi.user.domain;
 
 import com.david.ecommerceapi.shoppingCart.ShoppingCart;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ShoppingCart> shoppingCarts;
 

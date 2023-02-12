@@ -4,6 +4,7 @@ import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.exception.domain.ErrorMessage;
 import com.david.ecommerceapi.exception.domain.InvalidTokenException;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -21,7 +22,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @ControllerAdvice
 public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundException.class})
+    @ExceptionHandler({
+            NotFoundException.class,
+            TypeNotPresentException.class,
+            EntityNotFoundException.class,
+    })
     @ResponseBody
     public ErrorMessage notFound(HttpServletRequest request, Exception exception){
         return new ErrorMessage(exception, request.getRequestURI());

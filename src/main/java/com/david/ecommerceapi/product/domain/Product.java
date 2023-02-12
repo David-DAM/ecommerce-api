@@ -2,6 +2,8 @@ package com.david.ecommerceapi.product.domain;
 
 import com.david.ecommerceapi.productShoppingCart.ProductShoppingCart;
 import com.david.ecommerceapi.shoppingCart.ShoppingCart;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +28,7 @@ public class Product {
     private String image;
     @Enumerated(EnumType.STRING)
     private Category category;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
     private List<ProductShoppingCart> productShoppingCarts;
 
