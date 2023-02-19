@@ -1,5 +1,6 @@
 package com.david.ecommerceapi.shoppingCart;
 
+import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.product.repository.ProductRepository;
 import com.david.ecommerceapi.productShoppingCart.ProductShoppingCart;
@@ -31,6 +32,8 @@ public class ShoppingCartService {
         ShoppingCart shoppingCart = this.shoppingCartRepository.getReferenceById(id);
 
         List<ProductShoppingCart> productShoppingCartListFromDTO = getProductShoppingCartListFromDTO(productShoppingCartDTOList, shoppingCart);
+
+        isValidShoppingCartList(productShoppingCartListFromDTO);
 
         List<ProductShoppingCart> productShoppingCartList = shoppingCart.getProducts();
 
@@ -104,9 +107,18 @@ public class ShoppingCartService {
                         x -> new ProductShoppingCart.ProductShoppingCartBuilder()
                                 .quantity(x.getQuantity())
                                 .product(
-                                        this.productRepository.findById(x.getProduct_id()).get()
+                                        this.productRepository.getReferenceById(x.getProduct_id())
                                 )
                                 .shoppingCart(shoppingCart).build()
-                ).toList();
+                )
+                .toList();
+    }
+    //TODO replace with better solution for each errror message
+    public void isValidShoppingCartList(List<ProductShoppingCart> shoppingCartList){
+         shoppingCartList.stream()
+            .filter(x -> x.getQuantity() > 0)
+            .filter(x -> x.getProduct() != null)
+            .findAny()
+            .ifPresent(a -> {throw new BadRequestException("Product list no valid"); });
     }
 }

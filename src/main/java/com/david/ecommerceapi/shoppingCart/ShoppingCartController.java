@@ -29,11 +29,12 @@ public class ShoppingCartController {
         return ResponseEntity.ok(this.shoppingCartService.editProducts(productShoppingCartList, id));
     }
     @DeleteMapping("/{id}/products")
-    public ResponseEntity<ShoppingCart> editProducts(@RequestBody ProductShoppingCart productShoppingCart,@PathVariable Long id){
-        return ResponseEntity.ok(this.shoppingCartService.deleteProduct(productShoppingCart, id));
-    }
-    @DeleteMapping("/{id}/products/all")
     public ResponseEntity<ShoppingCart> deleteAllProducts(@RequestBody List<ProductShoppingCart> productShoppingCartList,@PathVariable Long id){
         return ResponseEntity.ok(this.shoppingCartService.deleteAllProducts(id));
+    }
+    //TODO add controllers for specific product of shopping cart
+    @DeleteMapping("/{id}/products/{idProduct}")
+    public ResponseEntity<ShoppingCart> editProducts(@RequestBody ProductShoppingCart productShoppingCart,@PathVariable Long id, @PathVariable Long idProduct){
+        return ResponseEntity.ok(this.shoppingCartService.deleteProduct(productShoppingCart, id));
     }
 }
