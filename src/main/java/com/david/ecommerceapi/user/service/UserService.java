@@ -17,7 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDTOMapper userDTOMapper;
-
+    //TODO Refactor with validations in model
     public boolean validateUser(User user){
 
         if (user == null) {
