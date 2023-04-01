@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### CUSTOM ###
-
+.properties
 src/main/resources/uploads/**
