@@ -54,6 +54,7 @@ public class UserService {
     }
 
     public Optional<UserDTO> findById(Long id) throws NotFoundException {
+
         Optional<User> user = this.userRepository.findById(id);
 
         if(user.isEmpty()) throw new NotFoundException("Usuario con id "+id+" no existe");

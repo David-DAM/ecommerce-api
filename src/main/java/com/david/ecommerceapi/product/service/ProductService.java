@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
+    //TODO Replace Optional with .orElseThrow
     public Product save(Product product, MultipartFile multipartFile) throws IOException {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -68,7 +68,10 @@ public class ProductService {
     }
 
     public void delete(Long id){
-        this.productRepository.deleteById(id);
+        Product product = this.productRepository.findById(id)
+                .orElseThrow( () -> new NotFoundException("El producto no fue encontrado") );
+
+        this.productRepository.delete(product);
     }
 
 }
