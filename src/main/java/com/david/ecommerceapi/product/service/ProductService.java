@@ -19,12 +19,13 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final FileUploadUtil fileUploadUtil;
     //TODO Replace Optional with .orElseThrow
     public Product save(Product product, MultipartFile multipartFile) throws IOException {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-        String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
+        String filecode = this.fileUploadUtil.saveFile(fileName, multipartFile);
 
         product.setImage(filecode+"-"+multipartFile.getOriginalFilename());
 
@@ -56,7 +57,7 @@ public class ProductService {
 
             String fileName = StringUtils.cleanPath(multipartFile.get().getOriginalFilename());
 
-            String filecode = FileUploadUtil.saveFile(fileName, multipartFile.get());
+            String filecode = this.fileUploadUtil.saveFile(fileName, multipartFile.get());
 
             productDb.get().setImage(filecode+"-"+multipartFile.get().getOriginalFilename());
 
@@ -67,11 +68,13 @@ public class ProductService {
         return productDb.get();
     }
 
-    public void delete(Long id){
+    public Product delete(Long id){
         Product product = this.productRepository.findById(id)
                 .orElseThrow( () -> new NotFoundException("El producto no fue encontrado") );
 
         this.productRepository.delete(product);
+
+        return product;
     }
 
 }

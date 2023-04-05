@@ -32,6 +32,11 @@ public class ProductController {
         return ResponseEntity.ok( this.productService.findById(id) );
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deletedById(@RequestParam Long id ){
+        return ResponseEntity.ok( this.productService.delete(id) );
+    }
+
     @PutMapping()
     public ResponseEntity<Product> update(@ModelAttribute Product product, @RequestParam Optional<MultipartFile> photo ) throws IOException {
         return ResponseEntity.ok( this.productService.update(product,photo) );

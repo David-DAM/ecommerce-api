@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
-    public static String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
+    public String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
 
         Path uploadPath = Paths.get("src/main/resources/uploads");
 
