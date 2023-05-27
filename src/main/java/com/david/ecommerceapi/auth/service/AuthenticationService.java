@@ -1,5 +1,6 @@
 package com.david.ecommerceapi.auth.service;
 
+import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.security.service.JwtService;
 import com.david.ecommerceapi.user.domain.Role;
 import com.david.ecommerceapi.user.domain.User;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-  private final UserRepository repository;
+  private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
   public AuthenticationResponse register(RegisterRequest request) {
+
+    if (this.userRepository.findByEmail(request.getEmail()).isPresent()) throw new BadRequestException("error");
 
     var user = User.builder()
         .firstname(request.getFirstname())
@@ -31,7 +34,7 @@ public class AuthenticationService {
         .role(Role.USER)
         .build();
 
-    repository.save(user);
+    userRepository.save(user);
 
     var jwtToken = jwtService.generateToken(user);
 
@@ -49,7 +52,7 @@ public class AuthenticationService {
         )
     );
 
-    var user = repository.findByEmail(request.getEmail())
+    var user = userRepository.findByEmail(request.getEmail())
         .orElseThrow();
 
     var jwtToken = jwtService.generateToken(user);

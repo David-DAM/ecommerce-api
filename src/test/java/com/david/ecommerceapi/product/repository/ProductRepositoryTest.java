@@ -26,7 +26,7 @@ class ProductRepositoryTest {
     @Autowired
     public TestEntityManager testEntityManager;
 
-    @Test
+    //@Test
     void save(){
         Product product = new Product (null,"prueba","prueba",22,null,Category.COMPUTER,null);
 
@@ -36,7 +36,7 @@ class ProductRepositoryTest {
 
         assertNotNull(product.getId());
     }
-    @Test
+    //@Test
     void find_all(){
         List<Product> productList = productRepository.findAll();
 

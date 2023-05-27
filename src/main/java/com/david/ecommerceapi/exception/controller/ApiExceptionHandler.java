@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import  org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -41,12 +44,26 @@ public class ApiExceptionHandler {
             MissingRequestHeaderException.class,
             MissingServletRequestParameterException.class,
             MethodArgumentTypeMismatchException.class,
-            HttpMessageNotReadableException.class
+            HttpMessageNotReadableException.class,
+            //MethodArgumentNotValidException.class
     })
     @ResponseBody
-    public ErrorMessage badRequest(HttpServletRequest request, Exception exception){
-        return new ErrorMessage(exception, request.getRequestURI());
+    public ErrorMessage badRequest(HttpServletRequest request, Exception exception){//, MethodArgumentNotValidException ex
+       //Map<String, String> errors = new HashMap<>();
+//        ex.getBindingResult().getFieldErrors().forEach((error) -> {
+//            errors.put(error.getField(), error.getDefaultMessage());
+//        });
+
+        //Handle business exceptions in other methods for the specific cases
+        return new ErrorMessage(exception, request.getRequestURI());//, errors
     }
+
+//    public Map<String,String> businnesException(BusinessException e){
+//        Map<String,String> errors= new HashMap<>();
+//        errors.put("message","exeption");
+//
+//        return errors;
+//    }
 
 //    @ResponseStatus(HttpStatus.FORBIDDEN)
 //    @ExceptionHandler({ForbidenException.class})
