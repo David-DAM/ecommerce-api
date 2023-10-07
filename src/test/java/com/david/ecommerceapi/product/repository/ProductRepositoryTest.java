@@ -2,12 +2,14 @@ package com.david.ecommerceapi.product.repository;
 
 import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
@@ -26,17 +28,19 @@ class ProductRepositoryTest {
     @Autowired
     public TestEntityManager testEntityManager;
 
-    //@Test
+    @Test
+    @Disabled
     void save(){
         Product product = new Product (null,"prueba","prueba",22,null,Category.COMPUTER,null);
 
         assertNull(product.getId());
 
-        productRepository.save(product);
+        Long id = testEntityManager.persist(product).getId();
 
-        assertNotNull(product.getId());
+        assertNotNull(id);
     }
-    //@Test
+    @Test
+    @Disabled
     void find_all(){
         List<Product> productList = productRepository.findAll();
 

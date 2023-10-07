@@ -1,6 +1,7 @@
 package com.david.ecommerceapi.auth.service;
 
 import com.david.ecommerceapi.exception.domain.BadRequestException;
+import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.security.service.JwtService;
 import com.david.ecommerceapi.user.domain.Role;
 import com.david.ecommerceapi.user.domain.User;
@@ -24,7 +25,7 @@ public class AuthenticationService {
 
   public AuthenticationResponse register(RegisterRequest request) {
 
-    if (this.userRepository.findByEmail(request.getEmail()).isPresent()) throw new BadRequestException("error");
+    if (this.userRepository.findByEmail(request.getEmail()).isPresent()) throw new NotFoundException("error");
 
     var user = User.builder()
         .firstname(request.getFirstname())
@@ -53,7 +54,7 @@ public class AuthenticationService {
     );
 
     var user = userRepository.findByEmail(request.getEmail())
-        .orElseThrow();
+        .orElseThrow( () -> new NotFoundException("User not found"));
 
     var jwtToken = jwtService.generateToken(user);
 

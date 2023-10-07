@@ -6,11 +6,16 @@ import com.david.ecommerceapi.product.domain.Product;
 import com.david.ecommerceapi.util.FileUploadUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +37,18 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll(){//Integer page, Integer pageSize, String sortBy
+
+//        Pageable paging = PageRequest.of(page, pageSize, Sort.by(sortBy));
+//
+//        Page<Product> pagedResult = this.productRepository.findAll(paging);
+//
+//        if(pagedResult.hasContent()) {
+//            return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<Product>();
+//        }
+
         return this.productRepository.findAll();
     }
 

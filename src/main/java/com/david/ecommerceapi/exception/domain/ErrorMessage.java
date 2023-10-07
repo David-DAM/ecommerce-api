@@ -10,7 +10,7 @@ public class ErrorMessage {
     private String exception;
     private String message;
     private String path;
-    private Map<String,String> errors;
+    //private Map<String,String> errors;
 
     public ErrorMessage(Exception exception, String path){
         this.exception = exception.getClass().getSimpleName();

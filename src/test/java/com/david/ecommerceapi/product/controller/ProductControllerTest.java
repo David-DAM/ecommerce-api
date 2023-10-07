@@ -4,6 +4,7 @@ import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
 import com.david.ecommerceapi.product.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,9 +30,6 @@ class ProductControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-//    @Test
-//    void save() {
-//    }
 
     @Test
     void findAll() {
@@ -44,11 +42,18 @@ class ProductControllerTest {
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 
-//    @Test
-//    void findById() {
-//    }
-//
-//    @Test
-//    void update() {
-//    }
+    @Test
+    @Disabled
+    void update() {
+    }
+
+    @Test
+    @Disabled
+    void findById() {
+    }
+
+    @Test
+    @Disabled
+    void save() {
+    }
 }

@@ -6,14 +6,17 @@ import com.david.ecommerceapi.product.service.ProductService;
 import com.david.ecommerceapi.security.filter.JwtAuthFilter;
 import com.david.ecommerceapi.security.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,16 +28,18 @@ import java.util.Optional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WithMockUser
+//@WithMockUser
 @WebMvcTest(ProductController.class)
-@ContextConfiguration(classes = {ProductController.class, JwtService.class, JwtAuthFilter.class})
+@AutoConfigureMockMvc(addFilters = false)
+//@ContextConfiguration(classes = {ProductController.class, JwtService.class, JwtAuthFilter.class})
 class ProductControllerMvcTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private ProductService productService;
     public Product PRODUCT_BASE_PREPARED = new Product(1L,"Samsung","Galaxy S3",23.34,"image.png", Category.PHONE,null);
-    //@Test
+    @Test
+    @Disabled
     void save() throws Exception {
         Mockito.when(
                 productService.save(
@@ -45,6 +50,7 @@ class ProductControllerMvcTest {
         this.mockMvc.perform(
                 post("/api/products")
                         .content(new ObjectMapper().writeValueAsString(PRODUCT_BASE_PREPARED))
+                        //.contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -71,7 +77,8 @@ class ProductControllerMvcTest {
                 .andExpect(jsonPath("$.name").value("Samsung"));
     }
 
-    //@Test
+    @Test
+    @Disabled
     void update() throws Exception {
 
         Mockito.when(

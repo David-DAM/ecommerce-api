@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class UserController {
     }
     @Operation(summary = "List all users", description = "List all users")
     @GetMapping()
+    //@PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<UserDTO>> findAll(){
 
         return ResponseEntity.ok(this.userService.findAll());
@@ -42,7 +44,6 @@ public class UserController {
         return ResponseEntity.ok(this.userService.update(user));
     }
 
-    // delete one
     @DeleteMapping("/{id}")
     public ResponseEntity<User> delete(@PathVariable Long id){
 

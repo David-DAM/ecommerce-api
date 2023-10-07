@@ -7,6 +7,7 @@ import com.david.ecommerceapi.security.filter.JwtAuthFilter;
 import com.david.ecommerceapi.security.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,9 @@ class ProductControllerRestTest {
     @MockBean
     private ProductService productService;
     public Product PRODUCT_BASE_PREPARED = new Product(1L,"Samsung","Galaxy S3",23.34,"image.png", Category.PHONE,null);
-    //@Test
+
+    @Test
+    @Disabled
     void save() throws Exception {
         Mockito.when(
                 productService.save(
@@ -47,7 +50,8 @@ class ProductControllerRestTest {
                 )).thenReturn(PRODUCT_BASE_PREPARED);
     }
 
-    //@Test
+    @Test
+    @Disabled
     void findAll() throws Exception {
         Mockito.when(productService.findAll()).thenReturn(Arrays.asList(PRODUCT_BASE_PREPARED));
 
@@ -56,7 +60,8 @@ class ProductControllerRestTest {
         Assertions.assertEquals(HttpStatus.NOT_FOUND,responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
+    @Disabled
     void findById() throws Exception {
         Mockito.when(productService.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
@@ -65,7 +70,8 @@ class ProductControllerRestTest {
         Assertions.assertEquals(HttpStatus.NOT_FOUND,responseEntity.getStatusCode());
     }
 
-    //@Test
+    @Test
+    @Disabled
     void update() throws Exception {
 
         Mockito.when(
