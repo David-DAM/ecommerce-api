@@ -4,24 +4,18 @@ import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Profile("dev")
+@Disabled
 class ProductRepositoryTest {
     @Autowired
     public ProductRepository productRepository;
@@ -29,7 +23,6 @@ class ProductRepositoryTest {
     public TestEntityManager testEntityManager;
 
     @Test
-    @Disabled
     void save(){
         Product product = new Product (null,"prueba","prueba",22,null,Category.COMPUTER,null);
 
@@ -40,7 +33,6 @@ class ProductRepositoryTest {
         assertNotNull(id);
     }
     @Test
-    @Disabled
     void find_all(){
         List<Product> productList = productRepository.findAll();
 
