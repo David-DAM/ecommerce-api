@@ -28,13 +28,9 @@ Las funcionalidades de este proyecto actualmente son las siguientes:
 - Carrito
   - CRUD
   - Productos carrito CRUD
+- Generación de documentación OPEN API
+- Envio de correos
 
 ### Futuras mejoras:
-- Incluir imágenes de productos almacenadas en servicios de Amazon ( S3 )
 - Verificación de creación y eliminación por correo electrónico
-
-### Tareas próximas
-
-- Mandar emails prueba
-- Generar PDF
 
