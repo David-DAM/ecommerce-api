@@ -39,8 +39,8 @@ public class ProductService {
 
     public List<Product> findAll(){//Integer page, Integer pageSize, String sortBy
 
-//        Pageable paging = PageRequest.of(page, pageSize, Sort.by(sortBy));
-//
+//     Pageable paging = PageRequest.of(page, pageSize, Sort.by(sortBy));
+
 //        Page<Product> pagedResult = this.productRepository.findAll(paging);
 //
 //        if(pagedResult.hasContent()) {

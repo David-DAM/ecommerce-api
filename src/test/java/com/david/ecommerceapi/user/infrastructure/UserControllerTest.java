@@ -1,17 +1,14 @@
-package com.david.ecommerceapi.user.controller;
+package com.david.ecommerceapi.user.infrastructure;
 
+import com.david.ecommerceapi.user.application.UserDTO;
+import com.david.ecommerceapi.user.application.UserService;
 import com.david.ecommerceapi.user.domain.Role;
-import com.david.ecommerceapi.user.domain.UserDTO;
-import com.david.ecommerceapi.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -23,7 +20,7 @@ class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    public Optional<UserDTO> USER_DTO = Optional.of(new UserDTO(1L, "David", "Jiménez", "david11jv@gmail.com", Role.USER));
+    public UserDTO USER_DTO = new UserDTO(1L, "David", "Jiménez", "david11jv@gmail.com", Role.USER);
 
     @BeforeEach
     void setUp() {

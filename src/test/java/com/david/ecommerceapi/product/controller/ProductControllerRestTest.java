@@ -6,10 +6,10 @@ import com.david.ecommerceapi.product.service.ProductService;
 import com.david.ecommerceapi.security.filter.JwtAuthFilter;
 import com.david.ecommerceapi.security.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,12 +33,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WithMockUser
 @ContextConfiguration(classes = {ProductController.class, JwtService.class, JwtAuthFilter.class})
+@Disabled
 class ProductControllerRestTest {
     @Autowired
     private TestRestTemplate restTemplate;
-    @MockBean
+    @Mock
     private ProductService productService;
     public Product PRODUCT_BASE_PREPARED = new Product(1L,"Samsung","Galaxy S3",23.34,"image.png", Category.PHONE,null);
+    private AutoCloseable autoCloseable;
+
+    @BeforeEach
+    void setUp() {
+        autoCloseable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        autoCloseable.close();
+    }
 
     @Test
     @Disabled

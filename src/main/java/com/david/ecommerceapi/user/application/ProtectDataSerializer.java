@@ -1,4 +1,4 @@
-package com.david.ecommerceapi.user.service;
+package com.david.ecommerceapi.user.application;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -11,7 +11,7 @@ public class ProtectDataSerializer extends JsonSerializer {
     @Override
     public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 
-        String masked = o.toString().replaceAll("\\w(?=\\w{4})","x");
+        String masked = o.toString().replaceAll("\\w(?=\\w{4})", "x");
 
         jsonGenerator.writeString(masked);
     }

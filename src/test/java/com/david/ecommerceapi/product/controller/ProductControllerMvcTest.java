@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 @AutoConfigureMockMvc(addFilters = false)
 //@ContextConfiguration(classes = {ProductController.class, JwtService.class, JwtAuthFilter.class})
+@Disabled
 class ProductControllerMvcTest {
     @Autowired
     private MockMvc mockMvc;

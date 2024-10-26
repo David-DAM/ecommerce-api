@@ -1,6 +1,6 @@
-package com.david.ecommerceapi.user.domain;
+package com.david.ecommerceapi.user.application;
 
-import com.david.ecommerceapi.user.service.MaskData;
+import com.david.ecommerceapi.user.domain.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

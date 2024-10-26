@@ -1,6 +1,6 @@
 package com.david.ecommerceapi.security.config;
 
-import com.david.ecommerceapi.user.repository.UserRepository;
+import com.david.ecommerceapi.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
