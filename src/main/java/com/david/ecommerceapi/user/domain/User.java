@@ -1,9 +1,8 @@
 package com.david.ecommerceapi.user.domain;
 
-import com.david.ecommerceapi.shoppingCart.ShoppingCart;
+import com.david.ecommerceapi.shoppingCart.domain.ShoppingCart;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
