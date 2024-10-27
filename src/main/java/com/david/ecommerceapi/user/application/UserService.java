@@ -3,7 +3,6 @@ package com.david.ecommerceapi.user.application;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
-import com.david.ecommerceapi.user.infrastructure.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

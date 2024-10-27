@@ -23,7 +23,7 @@ public class ProductController {
     @PostMapping()
     public ResponseEntity<Product> save(@ModelAttribute Product product, @RequestParam MultipartFile photo) throws IOException {
 
-        return ResponseEntity.ok(this.productService.save(product, photo));
+        return ResponseEntity.ok(productService.save(product, photo));
     }
 
     @GetMapping()
@@ -33,22 +33,22 @@ public class ProductController {
 //            @RequestParam(defaultValue = "id") String sortBy
     ) {
 
-        return ResponseEntity.ok(this.productService.findAll());//page, pageSize, sortBy
+        return ResponseEntity.ok(productService.findAll());//page, pageSize, sortBy
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> findById(@RequestParam Long id) {
-        return ResponseEntity.ok(this.productService.findById(id));
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deletedById(@RequestParam Long id) {
-        return ResponseEntity.ok(this.productService.delete(id));
+    public ResponseEntity<Product> deletedById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.delete(id));
     }
 
     @PutMapping()
     public ResponseEntity<Product> update(@ModelAttribute Product product, @RequestParam Optional<MultipartFile> photo) throws IOException {
-        return ResponseEntity.ok(this.productService.update(product, photo));
+        return ResponseEntity.ok(productService.update(product, photo));
     }
 
 }

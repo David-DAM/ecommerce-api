@@ -3,7 +3,7 @@ package com.david.ecommerceapi.product.application;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
-import com.david.ecommerceapi.product.infrastructure.SpringProductRepository;
+import com.david.ecommerceapi.product.domain.ProductRepository;
 import com.david.ecommerceapi.util.FileUploadUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceTest {
     @Mock
-    private SpringProductRepository productRepository;
+    private ProductRepository productRepository;
     @Mock
     private FileUploadUtil fileUploadUtil;
     @Mock
@@ -79,11 +79,11 @@ class ProductServiceTest {
 
         Mockito.when(productRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
-        Optional<Product> product = productService.findById(1L);
+        Product product = productService.findById(1L);
 
         assertNotNull(product);
 
-        assertEquals(1, product.get().getId());
+        assertEquals(1, product.getId());
     }
 
     @Test
@@ -131,7 +131,7 @@ class ProductServiceTest {
 
         Product product = productService.delete(PRODUCT_BASE_PREPARED.getId());
 
-        Mockito.verify(productRepository, Mockito.times(1)).delete(PRODUCT_BASE_PREPARED);
+        Mockito.verify(productRepository, Mockito.times(1)).deleteById(PRODUCT_BASE_PREPARED.getId());
 
         assertNotNull(product);
     }

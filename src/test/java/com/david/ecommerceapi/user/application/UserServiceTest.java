@@ -2,8 +2,7 @@ package com.david.ecommerceapi.user.application;
 
 import com.david.ecommerceapi.user.domain.Role;
 import com.david.ecommerceapi.user.domain.User;
-import com.david.ecommerceapi.user.infrastructure.SpringUserRepository;
-import com.david.ecommerceapi.user.infrastructure.UserMapper;
+import com.david.ecommerceapi.user.domain.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserServiceTest {
     @Mock
-    private SpringUserRepository userRepository;
+    private UserRepository userRepository;
     @Mock
     private UserMapper userMapper;
     @InjectMocks
@@ -88,9 +87,9 @@ class UserServiceTest {
 
         Optional<User> userDB = userRepository.findById(1L);
 
-        userRepository.delete(userDB.get());
+        userRepository.deleteById(userDB.get().getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).delete(userDB.get());
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(userDB.get().getId());
 
     }
 }

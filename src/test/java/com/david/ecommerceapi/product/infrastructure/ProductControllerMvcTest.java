@@ -65,7 +65,7 @@ class ProductControllerMvcTest {
 
     @Test
     void findById() throws Exception {
-        Mockito.when(productService.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
+        Mockito.when(productService.findById(1L)).thenReturn(PRODUCT_BASE_PREPARED);
 
         this.mockMvc.perform(get("/api/products/1").param("id", "1"))
                 .andExpect(status().isOk())

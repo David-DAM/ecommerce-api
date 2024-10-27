@@ -5,8 +5,14 @@ services:
     build: ./
     ports:
       - "8080:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: mysql:latest
     environment:
@@ -19,6 +25,11 @@ services:
       - "3306"
     volumes:
       - db:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
   db:

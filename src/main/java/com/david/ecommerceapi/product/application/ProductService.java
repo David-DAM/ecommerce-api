@@ -48,13 +48,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> findById(Long id) {
+    public Product findById(Long id) {
 
-        Optional<Product> product = productRepository.findById(id);
-
-        if (product.isEmpty()) throw new NotFoundException("Producto con Id:" + id + " no encontrado");
-
-        return Optional.of(product.get());
+        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with Id:" + id + " not found"));
     }
 
     public Product update(Product product, Optional<MultipartFile> multipartFile) throws IOException {
