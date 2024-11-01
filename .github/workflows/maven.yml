@@ -34,6 +34,11 @@ jobs:
           MYSQL_PASSWORD: "password"
           MYSQL_ROOT_PASSWORD: "password"
 
+    env:
+      SPRING_PROFILES_ACTIVE: test
+      DB_HOST: localhost
+      DB_PORT: 3306
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
