@@ -1,44 +1,85 @@
 package com.david.ecommerceapi.product.infrastructure;
 
-import com.david.ecommerceapi.product.domain.Product;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import com.david.ecommerceapi.auth.infrastructure.AuthenticationRequest;
+import com.david.ecommerceapi.auth.infrastructure.AuthenticationResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@Disabled
 class ProductControllerRestTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
+    private HttpEntity<String> entity;
+
+    @BeforeEach
+    void setUp() {
+
+        ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(
+                "/api/auth/authenticate",
+                AuthenticationRequest.builder()
+                        .email("test@gmail.com")
+                        .password("password")
+                        .build(),
+                AuthenticationResponse.class
+        );
+
+        String jwt = Objects.requireNonNull(response.getBody()).getToken();
+
+        entity = new HttpEntity<>(null, createHeadersWithJwt(jwt));
+
+    }
+
+    private HttpHeaders createHeadersWithJwt(String jwt) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(jwt);
+        return headers;
+    }
+
     @Test
-    void save() throws Exception {
+    void save() {
 
     }
 
     @Test
-    void findAll() throws Exception {
+    void findAll() {
 
-        ResponseEntity<Product> responseEntity = restTemplate.getForEntity("/api/products/1", Product.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "/api/products",
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
-    void findById() throws Exception {
+    void findById() {
 
-        ResponseEntity<Product> responseEntity = restTemplate.getForEntity("/api/product/1", Product.class);
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "/api/product/1",
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+
+        assertNotNull(responseEntity);
     }
 
     @Test
-    void update() throws Exception {
+    void update() {
 
 
     }

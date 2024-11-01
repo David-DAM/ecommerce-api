@@ -1,15 +1,15 @@
 package com.david.ecommerceapi.user.application;
 
+import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.user.domain.Role;
 import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +17,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
     @Mock
     private UserRepository userRepository;
     @Mock
     private UserMapper userMapper;
     @InjectMocks
     private UserService userService;
-
-    private AutoCloseable autoCloseable;
 
     public User USER_PREPARED = new User(1L, "Pepe", "Lopez", "pepito@gmail.com", "1", Role.USER, null);
 
@@ -34,24 +34,13 @@ class UserServiceTest {
     public UserDTO USER_DTO_PREPARED = new UserDTO(1L, "Pepe", "Lopez", "pepito@gmail.com", Role.USER);
 
 
-    @BeforeEach
-    void setUp() {
-        autoCloseable = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void closeMocks() throws Exception {
-        autoCloseable.close();
-    }
-
     @Test
     void update() {
 
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(USER_PREPARED));
+        Mockito.when(userRepository.save(USER_PREPARED)).thenReturn(USER_MODIFIED_PREPARED);
 
-        Mockito.when(userRepository.save(USER_MODIFIED_PREPARED)).thenReturn(USER_MODIFIED_PREPARED);
-
-        userRepository.save(USER_MODIFIED_PREPARED);
+        userService.update(USER_PREPARED);
 
         assertEquals("Juan", USER_MODIFIED_PREPARED.getFirstname());
     }
@@ -85,11 +74,11 @@ class UserServiceTest {
     void delete() {
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(USER_PREPARED));
 
-        Optional<User> userDB = userRepository.findById(1L);
+        User userDB = userRepository.findById(1L).orElseThrow(() -> new NotFoundException("User not found"));
 
-        userRepository.deleteById(userDB.get().getId());
+        userRepository.deleteById(userDB.getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).deleteById(userDB.get().getId());
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(userDB.getId());
 
     }
 }
