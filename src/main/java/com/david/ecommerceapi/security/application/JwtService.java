@@ -95,7 +95,7 @@ public class JwtService {
 
     public String renewToken(String token, UserDetails userDetails) {
         if (!canTokenBeRenewed(token)) {
-            throw new IllegalArgumentException("El token no puede ser renovado.");
+            throw new IllegalArgumentException("The JWT couldn't be renewed");
         }
         return generateToken(userDetails);
     }
