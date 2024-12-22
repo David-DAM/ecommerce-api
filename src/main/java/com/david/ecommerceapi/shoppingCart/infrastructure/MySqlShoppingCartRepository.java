@@ -2,7 +2,7 @@ package com.david.ecommerceapi.shoppingCart.infrastructure;
 
 import com.david.ecommerceapi.shoppingCart.domain.ShoppingCart;
 import com.david.ecommerceapi.shoppingCart.domain.ShoppingCartRepository;
-import com.david.ecommerceapi.user.domain.User;
+import com.david.ecommerceapi.user.infrastructure.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +15,8 @@ public class MySqlShoppingCartRepository implements ShoppingCartRepository {
     private final SpringShoppingCartRepository springShoppingCartRepository;
 
     @Override
-    public Optional<ShoppingCart> findByUserAndPayed(User user, boolean payed) {
-        return springShoppingCartRepository.findByUserAndPayed(user, payed);
+    public Optional<ShoppingCart> findByUserAndPayed(UserEntity userEntity, boolean payed) {
+        return springShoppingCartRepository.findByUserAndPayed(userEntity, payed);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.david.ecommerceapi.user.application;
+package com.david.ecommerceapi.user.infrastructure.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

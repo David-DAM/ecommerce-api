@@ -1,7 +1,7 @@
 package com.david.ecommerceapi.shoppingCart.domain;
 
 import com.david.ecommerceapi.productShoppingCart.domain.ProductShoppingCart;
-import com.david.ecommerceapi.user.domain.User;
+import com.david.ecommerceapi.user.infrastructure.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -27,7 +27,7 @@ public class ShoppingCart {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn()
-    private User user;
+    private UserEntity userEntity;
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private List<ProductShoppingCart> products;

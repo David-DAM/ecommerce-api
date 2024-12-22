@@ -1,7 +1,9 @@
-package com.david.ecommerceapi.user.infrastructure;
+package com.david.ecommerceapi.user.infrastructure.repository;
 
 import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
+import com.david.ecommerceapi.user.infrastructure.entity.UserEntity;
+import com.david.ecommerceapi.user.infrastructure.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,25 +15,28 @@ import java.util.Optional;
 public class MySqlUserRepository implements UserRepository {
 
     private final SpringUserRepository springUserRepository;
+    private final UserMapper userMapper;
 
     @Override
-    public User save(User user) {
-        return springUserRepository.save(user);
+    public User save(User userEntity) {
+        UserEntity entity = userMapper.userToUserEntity(userEntity);
+        UserEntity saved = springUserRepository.save(entity);
+        return userMapper.userEntityToUser(saved);
     }
 
     @Override
     public Optional<User> findById(Long id) {
-        return springUserRepository.findById(id);
+        return springUserRepository.findById(id).map(userMapper::userEntityToUser);
     }
 
     @Override
     public List<User> findAll() {
-        return springUserRepository.findAll();
+        return springUserRepository.findAll().stream().map(userMapper::userEntityToUser).toList();
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return springUserRepository.findByEmail(email);
+        return springUserRepository.findByEmail(email).map(userMapper::userEntityToUser);
     }
 
     @Override

@@ -22,12 +22,14 @@ public class TestConfiguration {
     public TestRestTemplate restTemplate() {
 
         userRepository.findByEmail("test@gmail.com").orElseGet(() -> {
-            User newUser = new User();
-            newUser.setRole(Role.USER);
-            newUser.setPassword(passwordEncoder.encode("password"));
-            newUser.setEmail("test@gmail.com");
-            newUser.setFirstname("test");
-            return userRepository.save(newUser);
+            User user = User.builder()
+                    .role(Role.USER)
+                    .email("test@gmail.com")
+                    .password(passwordEncoder.encode("password"))
+                    .firstname("test")
+                    .build();
+
+            return userRepository.save(user);
         });
 
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()

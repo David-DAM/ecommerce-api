@@ -2,10 +2,8 @@ package com.david.ecommerceapi.auth.application;
 
 import com.david.ecommerceapi.auth.infrastructure.AuthenticationRequest;
 import com.david.ecommerceapi.auth.infrastructure.AuthenticationResponse;
-import com.david.ecommerceapi.auth.infrastructure.RegisterRequest;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.security.application.JwtService;
-import com.david.ecommerceapi.user.domain.Role;
 import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,21 +21,15 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(User user) {
 
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) throw new NotFoundException("error");
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) throw new NotFoundException("error");
 
-        User user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepository.save(user);
+        User saved = userRepository.save(user);
 
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(saved);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
