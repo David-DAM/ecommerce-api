@@ -27,7 +27,7 @@ public class ShoppingCart {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn()
-    private UserEntity userEntity;
+    private UserEntity user;
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     private List<ProductShoppingCart> products;

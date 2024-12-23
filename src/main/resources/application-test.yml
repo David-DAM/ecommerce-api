@@ -12,3 +12,19 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+  zipkin:
+    tracing:
+      endpoint: ""
+  prometheus:
+    metrics:
+      export:
+        enabled: false
+  tracing:
+    sampling:
+      probability: 0.0

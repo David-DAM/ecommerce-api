@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class UserControllerImpl implements UserController {
 
     @Operation(summary = "List all users", description = "List all users")
     @GetMapping()
-    //@PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserDTO>> findAll() {
 
         List<UserDTO> userDTOS = userService.findAll().stream().map(userMapper::userToUserDTO).toList();

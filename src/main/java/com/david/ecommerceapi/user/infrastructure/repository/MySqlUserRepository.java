@@ -4,6 +4,7 @@ import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
 import com.david.ecommerceapi.user.infrastructure.entity.UserEntity;
 import com.david.ecommerceapi.user.infrastructure.mapper.UserMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,7 @@ public class MySqlUserRepository implements UserRepository {
         return springUserRepository.findAll().stream().map(userMapper::userEntityToUser).toList();
     }
 
+    @Transactional
     @Override
     public Optional<User> findByEmail(String email) {
         return springUserRepository.findByEmail(email).map(userMapper::userEntityToUser);
