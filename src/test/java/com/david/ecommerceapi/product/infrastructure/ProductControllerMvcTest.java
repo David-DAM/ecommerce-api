@@ -1,63 +1,61 @@
 package com.david.ecommerceapi.product.infrastructure;
 
-import com.david.ecommerceapi.product.application.ProductService;
-import com.david.ecommerceapi.product.domain.Category;
-import com.david.ecommerceapi.product.domain.Product;
+import com.david.ecommerceapi.EcommerceApiApplication;
+import com.david.ecommerceapi.auth.infrastructure.AuthenticationRequest;
+import com.david.ecommerceapi.auth.infrastructure.AuthenticationResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@WithMockUser
-@WebMvcTest(ProductController.class)
+@WebMvcTest(EcommerceApiApplication.class)
 @AutoConfigureMockMvc(addFilters = false)
-//@ContextConfiguration(classes = {ProductController.class, JwtService.class, JwtAuthFilter.class})
 @Disabled
 class ProductControllerMvcTest {
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private ProductService productService;
-    public Product PRODUCT_BASE_PREPARED = new Product(1L, "Samsung", "Galaxy S3", 23.34, "image.png", Category.PHONE, null);
 
-    @Test
-    @Disabled
-    void save() throws Exception {
-        Mockito.when(
-                productService.save(
-                        PRODUCT_BASE_PREPARED,
-                        new MockMultipartFile("image.png", "image.png".getBytes(StandardCharsets.UTF_8))
-                )).thenReturn(PRODUCT_BASE_PREPARED);
+    private String JWT = "";
 
-        this.mockMvc.perform(
-                        post("/api/products")
-                                .content(new ObjectMapper().writeValueAsString(PRODUCT_BASE_PREPARED))
-                        //.contentType(MediaType.MULTIPART_FORM_DATA)
-                )
+    @BeforeEach
+    void setUp() throws Exception {
+        AuthenticationRequest authRequest = AuthenticationRequest.builder()
+                .email("test@gmail.com")
+                .password("123456789")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(authRequest);
+
+        MvcResult result = mockMvc.perform(post("http://localhost:8080/api/auth/authenticate")
+                        .contentType("application/json")
+                        .content(jsonRequest))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value("Samsung"));
+                .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+
+        AuthenticationResponse response = objectMapper.readValue(jsonResponse, AuthenticationResponse.class);
+
+        JWT = response.getToken();
     }
 
     @Test
     void findAll() throws Exception {
-        Mockito.when(productService.findAll()).thenReturn(Arrays.asList(PRODUCT_BASE_PREPARED));
 
-        this.mockMvc.perform(get("/api/products"))
+
+        this.mockMvc.perform(get("http://localhost:8080/api/products")
+                        .header("Authorization", "Bearer " + JWT))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].name").value("Samsung"));
@@ -65,32 +63,11 @@ class ProductControllerMvcTest {
 
     @Test
     void findById() throws Exception {
-        Mockito.when(productService.findById(1L)).thenReturn(PRODUCT_BASE_PREPARED);
 
-        this.mockMvc.perform(get("/api/products/1").param("id", "1"))
+        this.mockMvc.perform(get("http://localhost:8080/api/products/1").param("id", "1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("Samsung"));
     }
 
-    @Test
-    @Disabled
-    void update() throws Exception {
-
-        Mockito.when(
-                productService.update(
-                        PRODUCT_BASE_PREPARED,
-                        Optional.empty()
-                )).thenReturn(PRODUCT_BASE_PREPARED);
-
-        this.mockMvc.perform(
-                        put("/api/products")
-                                .content(new ObjectMapper().writeValueAsString(PRODUCT_BASE_PREPARED))
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value("Samsung"));
-
-    }
 }

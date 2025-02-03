@@ -1,6 +1,6 @@
 package com.david.ecommerceapi.productShoppingCart.domain;
 
-import com.david.ecommerceapi.product.domain.Product;
+import com.david.ecommerceapi.product.infrastructure.entity.ProductEntity;
 import com.david.ecommerceapi.shoppingCart.domain.ShoppingCart;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -23,7 +23,7 @@ public class ProductShoppingCart {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn()
-    private Product product;
+    private ProductEntity product;
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn()

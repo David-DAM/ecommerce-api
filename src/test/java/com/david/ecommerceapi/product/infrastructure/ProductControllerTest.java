@@ -23,9 +23,16 @@ class ProductControllerTest {
     @Mock
     private ProductService productService;
     @InjectMocks
-    private ProductController productController;
+    private ProductControllerImpl productController;
 
-    public Product PRODUCT_BASE_PREPARED = new Product(1L, "Samsung", "Galaxy S3", 23.34, null, Category.PHONE, null);
+    public Product PRODUCT_BASE_PREPARED = Product.builder()
+            .id(1L)
+            .name("Samsung")
+            .description("Galaxy S3")
+            .price(23.34)
+            .image("image.png")
+            .category(Category.COMPUTER)
+            .build();
 
     @Test
     void findAll() {

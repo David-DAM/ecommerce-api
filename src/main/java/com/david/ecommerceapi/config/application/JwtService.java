@@ -1,4 +1,4 @@
-package com.david.ecommerceapi.security.application;
+package com.david.ecommerceapi.config.application;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

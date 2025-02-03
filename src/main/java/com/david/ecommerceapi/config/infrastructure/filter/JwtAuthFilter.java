@@ -1,6 +1,6 @@
-package com.david.ecommerceapi.security.infrastructure;
+package com.david.ecommerceapi.config.infrastructure.filter;
 
-import com.david.ecommerceapi.security.application.JwtService;
+import com.david.ecommerceapi.config.application.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

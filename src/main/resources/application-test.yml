@@ -12,6 +12,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+  data:
+    redis:
+      repositories:
+        enabled: false
 
 management:
   endpoints:

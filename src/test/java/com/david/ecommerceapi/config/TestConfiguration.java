@@ -25,7 +25,7 @@ public class TestConfiguration {
             User user = User.builder()
                     .role(Role.USER)
                     .email("test@gmail.com")
-                    .password(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("123456789"))
                     .firstname("test")
                     .build();
 

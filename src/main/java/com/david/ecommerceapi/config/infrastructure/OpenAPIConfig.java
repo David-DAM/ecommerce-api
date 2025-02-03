@@ -1,4 +1,4 @@
-package com.david.ecommerceapi.security.infrastructure;
+package com.david.ecommerceapi.config.infrastructure;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -29,5 +29,5 @@ import org.springframework.context.annotation.Configuration;
         bearerFormat = "JWT",
         scheme = "bearer"
 )
-public class OpenAPIConfiguration {
+public class OpenAPIConfig {
 }

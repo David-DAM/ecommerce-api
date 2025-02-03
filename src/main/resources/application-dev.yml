@@ -14,6 +14,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 6000
 
 management:
   endpoints:

@@ -1,8 +1,8 @@
 package com.david.ecommerceapi.user.infrastructure;
 
 import com.david.ecommerceapi.exception.domain.NotFoundException;
-import com.david.ecommerceapi.user.application.UserServiceImpl;
 import com.david.ecommerceapi.user.domain.User;
+import com.david.ecommerceapi.user.domain.UserService;
 import com.david.ecommerceapi.user.infrastructure.dto.UserDTO;
 import com.david.ecommerceapi.user.infrastructure.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final UserMapper userMapper;
 
     @GetMapping("/{id}")

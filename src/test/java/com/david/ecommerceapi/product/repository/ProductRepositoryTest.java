@@ -1,8 +1,8 @@
 package com.david.ecommerceapi.product.repository;
 
 import com.david.ecommerceapi.product.domain.Category;
-import com.david.ecommerceapi.product.domain.Product;
-import com.david.ecommerceapi.product.infrastructure.SpringProductRepository;
+import com.david.ecommerceapi.product.infrastructure.entity.ProductEntity;
+import com.david.ecommerceapi.product.infrastructure.repository.QueryProductRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @Disabled
 class ProductRepositoryTest {
     @Autowired
-    public SpringProductRepository productRepository;
+    public QueryProductRepository productRepository;
     @Autowired
     public TestEntityManager testEntityManager;
 
     @Test
     void save() {
-        Product product = new Product(null, "prueba", "prueba", 22, null, Category.COMPUTER, null);
+        ProductEntity product = new ProductEntity(null, "prueba", "prueba", 22, null, Category.COMPUTER, null);
 
         assertNull(product.getId());
 
@@ -39,7 +39,7 @@ class ProductRepositoryTest {
 
     @Test
     void find_all() {
-        List<Product> productList = productRepository.findAll();
+        List<ProductEntity> productList = productRepository.findAll();
 
         assertNotNull(productList);
     }

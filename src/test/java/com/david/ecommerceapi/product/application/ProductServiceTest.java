@@ -35,8 +35,22 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    public Product PRODUCT_BASE_PREPARED = new Product(1L, "Samsung", "Galaxy S3", 23.34, "image.png", Category.PHONE, null);
-    public Product PRODUCT_MODIFIED_PREPARED = new Product(1L, "Samsung", "Galaxy S3", 23.34, "image.png", Category.COMPUTER, null);
+    public Product PRODUCT_BASE_PREPARED = Product.builder()
+            .id(1L)
+            .name("Samsung")
+            .description("Galaxy S3")
+            .price(23.34)
+            .image("image.png")
+            .category(Category.PHONE)
+            .build();
+    public Product PRODUCT_MODIFIED_PREPARED = Product.builder()
+            .id(1L)
+            .name("Samsung")
+            .description("Galaxy S3")
+            .price(23.34)
+            .image("image.png")
+            .category(Category.COMPUTER)
+            .build();
 
 
     @Test

@@ -2,8 +2,8 @@ package com.david.ecommerceapi.auth.application;
 
 import com.david.ecommerceapi.auth.infrastructure.AuthenticationRequest;
 import com.david.ecommerceapi.auth.infrastructure.AuthenticationResponse;
+import com.david.ecommerceapi.config.application.JwtService;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
-import com.david.ecommerceapi.security.application.JwtService;
 import com.david.ecommerceapi.user.domain.User;
 import com.david.ecommerceapi.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;

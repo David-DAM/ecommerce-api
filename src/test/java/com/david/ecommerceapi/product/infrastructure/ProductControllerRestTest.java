@@ -29,7 +29,7 @@ class ProductControllerRestTest {
                 "/api/auth/authenticate",
                 AuthenticationRequest.builder()
                         .email("test@gmail.com")
-                        .password("password")
+                        .password("123456789")
                         .build(),
                 AuthenticationResponse.class
         );

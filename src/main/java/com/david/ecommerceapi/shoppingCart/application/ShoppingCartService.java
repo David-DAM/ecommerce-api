@@ -2,7 +2,7 @@ package com.david.ecommerceapi.shoppingCart.application;
 
 import com.david.ecommerceapi.exception.domain.BadRequestException;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
-import com.david.ecommerceapi.product.infrastructure.SpringProductRepository;
+import com.david.ecommerceapi.product.infrastructure.repository.QueryProductRepository;
 import com.david.ecommerceapi.productShoppingCart.domain.ProductShoppingCart;
 import com.david.ecommerceapi.productShoppingCart.infrastructure.ProductShoppingCartDTO;
 import com.david.ecommerceapi.shoppingCart.domain.ShoppingCart;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
-    private final SpringProductRepository productRepository;
+    private final QueryProductRepository productRepository;
 
     public List<ProductShoppingCart> findAllProductsByShoppingCart(Long id) {
 
