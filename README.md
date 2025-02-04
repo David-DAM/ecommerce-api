@@ -53,9 +53,9 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
    ```yaml
    spring:
      datasource:
-       url: jdbc:mysql://localhost:3306/ecommerce
-       username: tu_usuario
-       password: tu_contraseña
+       url: jdbc:mysql://localhost:3306/spring
+       username: root
+       password: password
      jpa:
        hibernate:
          ddl-auto: update
