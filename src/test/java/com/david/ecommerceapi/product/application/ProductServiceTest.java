@@ -3,7 +3,8 @@ package com.david.ecommerceapi.product.application;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
-import com.david.ecommerceapi.product.domain.ProductRepository;
+import com.david.ecommerceapi.product.infrastructure.repository.implementation.MySqlProductRepositoryImpl;
+import com.david.ecommerceapi.product.infrastructure.repository.implementation.RedisProductRepositoryImpl;
 import com.david.ecommerceapi.util.FileUploadUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
     @Mock
-    private ProductRepository productRepository;
+    private MySqlProductRepositoryImpl mySqlProductRepository;
+    @Mock
+    private RedisProductRepositoryImpl redisProductRepository;
     @Mock
     private FileUploadUtil fileUploadUtil;
     @Mock
@@ -56,7 +59,7 @@ class ProductServiceTest {
     @Test
     void save() throws IOException {
 
-        Mockito.when(productRepository.save(PRODUCT_BASE_PREPARED)).thenReturn(PRODUCT_BASE_PREPARED);
+        Mockito.when(mySqlProductRepository.save(PRODUCT_BASE_PREPARED)).thenReturn(PRODUCT_BASE_PREPARED);
 
         Mockito.when(MULTIPARTFILE_PREPARED.getOriginalFilename()).thenReturn("image.png");
 
@@ -76,7 +79,7 @@ class ProductServiceTest {
 
     @Test
     void find_all() {
-        Mockito.when(productRepository.findAll()).thenReturn(Arrays.asList(PRODUCT_BASE_PREPARED));
+        Mockito.when(mySqlProductRepository.findAll()).thenReturn(Arrays.asList(PRODUCT_BASE_PREPARED));
 
         List<Product> productList = productService.findAll();
 
@@ -88,7 +91,7 @@ class ProductServiceTest {
     @Test
     void find_by_id() {
 
-        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
+        Mockito.when(mySqlProductRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
         Product product = productService.findById(1L);
 
@@ -100,9 +103,9 @@ class ProductServiceTest {
     @Test
     void update_without_image() throws IOException {
 
-        Mockito.when(productRepository.save(PRODUCT_MODIFIED_PREPARED)).thenReturn(PRODUCT_MODIFIED_PREPARED);
+        Mockito.when(mySqlProductRepository.save(PRODUCT_MODIFIED_PREPARED)).thenReturn(PRODUCT_MODIFIED_PREPARED);
 
-        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
+        Mockito.when(mySqlProductRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
         Product product = productService.update(PRODUCT_MODIFIED_PREPARED, Optional.empty());
 
@@ -117,13 +120,13 @@ class ProductServiceTest {
     @Disabled
     void update_with_image() throws IOException {
 
-        Mockito.when(productRepository.save(PRODUCT_MODIFIED_PREPARED)).thenReturn(PRODUCT_MODIFIED_PREPARED);
+        Mockito.when(mySqlProductRepository.save(PRODUCT_MODIFIED_PREPARED)).thenReturn(PRODUCT_MODIFIED_PREPARED);
 
         Mockito.when(MULTIPARTFILE_PREPARED.getOriginalFilename()).thenReturn("image.png");
 
         Mockito.when(fileUploadUtil.saveFile(StringUtils.cleanPath(MULTIPARTFILE_PREPARED.getOriginalFilename()), MULTIPARTFILE_PREPARED)).thenReturn("2024");
 
-        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
+        Mockito.when(mySqlProductRepository.findById(1L)).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
         Product product = productService.update(PRODUCT_MODIFIED_PREPARED, Optional.of(MULTIPARTFILE_PREPARED));
 
@@ -139,11 +142,11 @@ class ProductServiceTest {
     @Test
     void delete() {
 
-        Mockito.when(productRepository.findById(PRODUCT_BASE_PREPARED.getId())).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
+        Mockito.when(mySqlProductRepository.findById(PRODUCT_BASE_PREPARED.getId())).thenReturn(Optional.ofNullable(PRODUCT_BASE_PREPARED));
 
         Product product = productService.delete(PRODUCT_BASE_PREPARED.getId());
 
-        Mockito.verify(productRepository, Mockito.times(1)).deleteById(PRODUCT_BASE_PREPARED.getId());
+        Mockito.verify(mySqlProductRepository, Mockito.times(1)).deleteById(PRODUCT_BASE_PREPARED.getId());
 
         assertNotNull(product);
     }
@@ -151,7 +154,7 @@ class ProductServiceTest {
     @Test
     void delete_throw_not_found() {
 
-        Mockito.when(productRepository.findById(PRODUCT_BASE_PREPARED.getId() - 1)).thenThrow(NotFoundException.class);
+        Mockito.when(mySqlProductRepository.findById(PRODUCT_BASE_PREPARED.getId() - 1)).thenThrow(NotFoundException.class);
 
         assertThrows(NotFoundException.class, () -> productService.delete(PRODUCT_BASE_PREPARED.getId() - 1));
     }

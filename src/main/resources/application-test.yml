@@ -11,10 +11,16 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
   data:
     redis:
       repositories:
+        enabled: false
+  ai:
+    openai:
+      chat:
+        enabled: false
+      embedding:
         enabled: false
 
 management:

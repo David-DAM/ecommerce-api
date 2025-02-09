@@ -1,0 +1,4 @@
+Dado el siguiente mensaje de un usuario pidiendo una sugerencia de un producto:
+"{request}"
+
+Responde con un producto sin dar tu opinion, solo datos del producto que corresponde a cada valor y en el idioma que haya introducido el usuario con su mensaje.

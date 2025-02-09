@@ -13,12 +13,26 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
   data:
     redis:
       host: localhost
       port: 6379
       timeout: 6000
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+      chat:
+        options:
+          model: "gpt-4o-mini"
+          temperature: 0
+          max-tokens: 1000
+          top-p: 1.0
+          presence-penalty: 0.0
+          frequency-penalty: 0.0
+      embedding:
+        options:
+          model: "text-embedding-ada-002"
 
 management:
   endpoints:
