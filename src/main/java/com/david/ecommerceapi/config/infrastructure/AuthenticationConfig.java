@@ -1,6 +1,6 @@
 package com.david.ecommerceapi.config.infrastructure;
 
-import com.david.ecommerceapi.user.domain.UserRepository;
+import com.david.ecommerceapi.user.infrastructure.repository.SpringUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AuthenticationConfig {
 
-    private final UserRepository userRepository;
+    private final SpringUserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
