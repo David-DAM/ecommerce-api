@@ -37,6 +37,12 @@ public class RedisProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public List<Product> findAllByIdIn(List<Long> ids) {
+        Iterable<ProductCacheEntity> all = cacheProductRepository.findAllById(ids);
+        return StreamSupport.stream(all.spliterator(), false).map(productMapper::productCacheEntityToProduct).toList();
+    }
+
+    @Override
     public void deleteById(Long id) {
         cacheProductRepository.deleteById(id);
     }

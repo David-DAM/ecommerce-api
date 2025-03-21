@@ -2,10 +2,10 @@ spring:
   application:
     name: ecommerce-service
   datasource:
-    url: jdbc:mysql://localhost:3306/spring
+    url: jdbc:postgresql://localhost:5432/ecommerce
     username: root
     password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,7 +13,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
       host: localhost
@@ -32,7 +32,14 @@ spring:
           frequency-penalty: 0.0
       embedding:
         options:
-          model: "text-embedding-ada-002"
+          model: "text-embedding-3-small"
+    vectorstore:
+      pgvector:
+        initialize-schema: true  # Automatically initializes the pgvector schema in the database
+        index-type: HNSW  # Uses HNSW (Hierarchical Navigable Small World) for approximate nearest neighbor search
+        distance-type: COSINE_DISTANCE  # Uses cosine distance to measure vector similarity
+        dimensions: 1536  # Defines the number of dimensions for stored vectors (e.g., OpenAI embeddings)
+        max-document-batch-size: 10000  # (Optional) Maximum number of documents per batch insert for better performance
 
 management:
   endpoints:
@@ -62,8 +69,6 @@ management:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-
-
 
 logging:
   pattern:

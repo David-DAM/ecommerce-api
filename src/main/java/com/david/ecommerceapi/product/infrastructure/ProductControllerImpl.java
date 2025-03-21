@@ -21,7 +21,7 @@ public class ProductControllerImpl implements ProductController {
     private final ProductService productService;
 
     @PostMapping()
-    public ResponseEntity<Product> save(@ModelAttribute Product product, @RequestParam MultipartFile photo) throws IOException {
+    public ResponseEntity<Product> save(@ModelAttribute Product product, @RequestParam(required = false) MultipartFile photo) throws IOException {
 
         return ResponseEntity.ok(productService.save(product, photo));
     }

@@ -6,13 +6,15 @@ import com.david.ecommerceapi.product.domain.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AssistantServiceImpl implements AssistantService {
 
     private final AssistantSuggestion assistantSuggestion;
 
-    public Product getProductSuggestion(String message) {
+    public Optional<Product> getProductSuggestion(String message) {
         return assistantSuggestion.getProductSuggestion(message);
     }
 }

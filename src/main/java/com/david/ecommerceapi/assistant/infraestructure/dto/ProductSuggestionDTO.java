@@ -19,6 +19,8 @@ public class ProductSuggestionDTO {
     @JsonProperty(required = true)
     private String description;
     @JsonProperty(required = true)
+    private double price;
+    @JsonProperty(required = true)
     private String imageUrl;
 
 }

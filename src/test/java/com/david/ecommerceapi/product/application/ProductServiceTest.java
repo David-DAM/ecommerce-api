@@ -3,7 +3,7 @@ package com.david.ecommerceapi.product.application;
 import com.david.ecommerceapi.exception.domain.NotFoundException;
 import com.david.ecommerceapi.product.domain.Category;
 import com.david.ecommerceapi.product.domain.Product;
-import com.david.ecommerceapi.product.infrastructure.repository.implementation.MySqlProductRepositoryImpl;
+import com.david.ecommerceapi.product.infrastructure.repository.implementation.PostgresProductRepositoryImpl;
 import com.david.ecommerceapi.product.infrastructure.repository.implementation.RedisProductRepositoryImpl;
 import com.david.ecommerceapi.util.FileUploadUtil;
 import org.junit.jupiter.api.Disabled;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
     @Mock
-    private MySqlProductRepositoryImpl mySqlProductRepository;
+    private PostgresProductRepositoryImpl mySqlProductRepository;
     @Mock
     private RedisProductRepositoryImpl redisProductRepository;
     @Mock

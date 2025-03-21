@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class MySqlProductRepositoryImpl implements ProductRepository {
+public class PostgresProductRepositoryImpl implements ProductRepository {
 
     private final QueryProductRepository queryProductRepository;
     private final ProductMapper productMapper;
@@ -32,6 +32,11 @@ public class MySqlProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findAll() {
         return queryProductRepository.findAll().stream().map(productMapper::productEntityToProduct).toList();
+    }
+
+    @Override
+    public List<Product> findAllByIdIn(List<Long> ids) {
+        return queryProductRepository.findAllById(ids).stream().map(productMapper::productEntityToProduct).toList();
     }
 
     @Override

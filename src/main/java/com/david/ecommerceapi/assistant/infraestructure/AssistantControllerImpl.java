@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/assistant")
 @SecurityRequirement(name = "Bearer Authentication")
@@ -23,8 +25,14 @@ public class AssistantControllerImpl implements AssistantController {
 
     @GetMapping("/products")
     public ResponseEntity<ProductSuggestionDTO> getProductSuggestions(@RequestParam String message) {
-        Product productSuggestion = assistantService.getProductSuggestion(message);
-        ProductSuggestionDTO productSuggestionDTO = suggestionMapper.productToProductSuggestionDTO(productSuggestion);
+        Optional<Product> productSuggestion = assistantService.getProductSuggestion(message);
+
+        if (productSuggestion.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ProductSuggestionDTO productSuggestionDTO = suggestionMapper.productToProductSuggestionDTO(productSuggestion.get());
+        
         return ResponseEntity.ok(productSuggestionDTO);
     }
 
