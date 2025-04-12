@@ -27,7 +27,7 @@ import java.util.UUID;
 @Transactional
 public class ProductService {
 
-    private final PostgresProductRepositoryImpl mySqlProductRepository;
+    private final PostgresProductRepositoryImpl postgresProductRepository;
     private final RedisProductRepositoryImpl redisProductRepository;
     private final FileUploadUtil fileUploadUtil;
     private final VectorStore vectorStore;
@@ -42,7 +42,7 @@ public class ProductService {
             product.setImage(fileCode + "-" + file.getOriginalFilename());
         }
 
-        Product saved = mySqlProductRepository.save(product);
+        Product saved = postgresProductRepository.save(product);
         redisProductRepository.save(saved);
         saveVectorProduct(saved);
 
@@ -81,7 +81,7 @@ public class ProductService {
             return products;
         }
 
-        products = mySqlProductRepository.findAll();
+        products = postgresProductRepository.findAll();
 
         if (!products.isEmpty()) {
             redisProductRepository.saveAll(products);
@@ -99,7 +99,7 @@ public class ProductService {
             return optionalProduct.get();
         }
 
-        Product product = mySqlProductRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with Id:" + id + " not found"));
+        Product product = postgresProductRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with Id:" + id + " not found"));
 
         redisProductRepository.save(product);
         log.info("Found product in database with id {}", id);
@@ -109,7 +109,7 @@ public class ProductService {
 
     public Product update(Product product, Optional<MultipartFile> multipartFile) throws IOException {
 
-        Product productDb = mySqlProductRepository.findById(product.getId()).orElseThrow(() -> new NotFoundException("El producto no fue encontrado"));
+        Product productDb = postgresProductRepository.findById(product.getId()).orElseThrow(() -> new NotFoundException("El producto no fue encontrado"));
 
         BeanUtils.copyProperties(product, productDb, "image");
 
@@ -123,17 +123,17 @@ public class ProductService {
 
         }
 
-        mySqlProductRepository.save(productDb);
+        postgresProductRepository.save(productDb);
         redisProductRepository.save(productDb);
 
         return productDb;
     }
 
     public Product delete(Long id) {
-        Product product = mySqlProductRepository.findById(id)
+        Product product = postgresProductRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("El producto no fue encontrado"));
 
-        mySqlProductRepository.deleteById(product.getId());
+        postgresProductRepository.deleteById(product.getId());
         redisProductRepository.deleteById(product.getId());
         vectorStore.delete(List.of(product.getId().toString()));
 

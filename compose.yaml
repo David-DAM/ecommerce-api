@@ -59,6 +59,8 @@ services:
     image: grafana/grafana
     volumes:
       - ./docker-config/grafana/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - ./docker-config/grafana/grafana-dashboards.yml:/etc/grafana/provisioning/dashboards/grafana-dashboards.yml
+      - ./docker-config/grafana/dashboards:/etc/grafana/provisioning/dashboards
     ports:
       - "3000:3000"
     healthcheck:
